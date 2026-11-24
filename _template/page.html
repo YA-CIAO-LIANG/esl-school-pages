@@ -91,6 +91,29 @@
 
         #progress { transform-origin: left; transform: scaleX(0); }
 
+
+        /* 課程特色動畫 */
+        .reveal.flip { transform: perspective(800px) rotateX(18deg) translateY(30px); transform-origin: top; }
+        .reveal.flip.show { transform: none; }
+        .feat-bar { transform: scaleX(0); transform-origin: left; transition: transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--d, 0ms) + 300ms); }
+        .show .feat-bar { transform: scaleX(1); }
+        .feat-icon .ring { animation: spin 12s linear infinite; }
+        .feat-card:hover .feat-icon .ring { animation-duration: 2.5s; border-color: rgba(212,175,55,.9); }
+        .feat-card:hover .feat-icon { background: rgba(212,175,55,.3); }
+        .feat-card { transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease, border-color .3s ease; }
+        .feat-card:hover { box-shadow: 0 0 0 1px rgba(212,175,55,.35), 0 20px 45px -15px rgba(212,175,55,.35); }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes wave { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-12deg); } 75% { transform: rotate(12deg); } }
+        @keyframes hop { 0%,100% { transform: translateY(0); } 40% { transform: translateY(-7px) rotate(-8deg); } }
+        @keyframes swing { 0%,100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+        @keyframes write { 0%,100% { transform: translate(0,0) rotate(0); } 25% { transform: translate(3px,-2px) rotate(-10deg); } 50% { transform: translate(-2px,2px) rotate(6deg); } 75% { transform: translate(2px,1px) rotate(-4deg); } }
+        @keyframes pop { 0%,100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+        .anim-wave { animation: wave 2.4s ease-in-out infinite; transform-origin: bottom left; }
+        .anim-bounce { animation: hop 1.8s ease-in-out infinite; }
+        .anim-swing { animation: swing 1.6s ease-in-out infinite; }
+        .anim-write { animation: write 1.4s ease-in-out infinite; }
+        .anim-pop { animation: pop 2s ease-in-out infinite; }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation: none !important; transition: none !important; }
             .reveal, .hero-in { opacity: 1 !important; transform: none !important; }
@@ -151,7 +174,7 @@
                     </div>
                 </div>
                 <div class="lg:col-span-6 mt-14 lg:mt-0 relative hero-in" style="animation-delay:.35s">
-                    <div class="float relative">
+                    <div class="float relative max-w-xs sm:max-w-sm mx-auto">
                         <div class="absolute inset-0 bg-esl-gold rounded-2xl transform rotate-3 scale-105 opacity-20"></div>
                         <img src="images/hero-goals.png" alt="國際教育 3 大目標" class="relative rounded-2xl shadow-2xl object-cover w-full h-auto border border-white/10">
                     </div>
@@ -234,7 +257,7 @@
     <section id="abilities" class="py-20 md:py-24 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div class="reveal from-left order-2 lg:order-1 relative">
+                <div class="reveal from-left order-2 lg:order-1 relative max-w-xs sm:max-w-sm mx-auto w-full">
                     <div class="absolute -inset-4 bg-esl-blue/5 rounded-3xl transform -rotate-2"></div>
                     <img src="images/six-abilities.webp" alt="讓孩子像學母語一樣學英文" class="relative rounded-2xl shadow-xl w-full h-auto object-cover border border-gray-100">
                 </div>
@@ -281,66 +304,89 @@
             <div class="reveal text-center max-w-3xl mx-auto mb-12">
                 <h2 class="text-sm font-bold text-esl-gold tracking-widest uppercase mb-3">Why Choose Us</h2>
                 <h3 class="text-3xl md:text-4xl font-black">課程特色</h3>
-                <p class="text-gray-300 mt-3">點選卡片看詳細說明</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- 每張卡片：標題＋一句重點，點開看詳細 -->
-                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:0ms" aria-expanded="false">
-                    <div class="flex items-start gap-4">
-                        <span class="text-3xl font-black text-esl-gold/40 leading-none">01</span>
-                        <div class="flex-1">
+                <div class="feat-card reveal flip lift relative overflow-hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 hover:border-esl-gold/50" style="--d:0ms">
+                    <span class="feat-bar absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-esl-gold to-esl-lightGold"></span>
+                    <span class="absolute -right-2 -bottom-6 text-8xl font-black text-white/5 select-none">01</span>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="feat-icon relative w-14 h-14 shrink-0 rounded-full bg-esl-gold/15 flex items-center justify-center text-esl-gold text-2xl">
+                            <span class="ring absolute inset-0 rounded-full border-2 border-dashed border-esl-gold/40"></span>
+                            <i class="fa-solid fa-flag-usa anim-wave"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-esl-gold/70 tracking-widest">01</p>
                             <h4 class="text-xl font-bold text-esl-gold">美式課程體驗</h4>
-                            <p class="text-gray-300 text-sm mt-1">仿效國外小學・聽說讀寫＋藝能</p>
                         </div>
-                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
                     </div>
-                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">課程仿效國外國小的教學安排，涵蓋聽說讀寫及藝能科目等多元領域。讓英語不僅是第二語言，更成為日常生活與學習的工具。</p></div></div>
-                </button>
-                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:100ms" aria-expanded="false">
-                    <div class="flex items-start gap-4">
-                        <span class="text-3xl font-black text-esl-gold/40 leading-none">02</span>
-                        <div class="flex-1">
+                    <p class="inline-flex items-center gap-2 text-white font-medium text-sm mb-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>仿效國外小學・聽說讀寫＋藝能</p>
+                    <p class="text-gray-300 text-sm leading-relaxed relative">課程仿效國外國小的教學安排，涵蓋聽說讀寫及藝能科目等多元領域。讓英語不僅是第二語言，更成為日常生活與學習的工具。</p>
+                </div>
+                <div class="feat-card reveal flip lift relative overflow-hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 hover:border-esl-gold/50" style="--d:130ms">
+                    <span class="feat-bar absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-esl-gold to-esl-lightGold"></span>
+                    <span class="absolute -right-2 -bottom-6 text-8xl font-black text-white/5 select-none">02</span>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="feat-icon relative w-14 h-14 shrink-0 rounded-full bg-esl-gold/15 flex items-center justify-center text-esl-gold text-2xl">
+                            <span class="ring absolute inset-0 rounded-full border-2 border-dashed border-esl-gold/40"></span>
+                            <i class="fa-solid fa-puzzle-piece anim-bounce"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-esl-gold/70 tracking-widest">02</p>
                             <h4 class="text-xl font-bold text-esl-gold">活潑學習方式</h4>
-                            <p class="text-gray-300 text-sm mt-1">實作活動・激發創意與自信</p>
                         </div>
-                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
                     </div>
-                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">以生動有趣的方式，幫助孩子輕鬆掌握基礎技能。透過實作活動激發創意思維，學會專注與自由表達，提升自信心。</p></div></div>
-                </button>
-                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:200ms" aria-expanded="false">
-                    <div class="flex items-start gap-4">
-                        <span class="text-3xl font-black text-esl-gold/40 leading-none">03</span>
-                        <div class="flex-1">
+                    <p class="inline-flex items-center gap-2 text-white font-medium text-sm mb-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>實作活動・激發創意與自信</p>
+                    <p class="text-gray-300 text-sm leading-relaxed relative">以生動有趣的方式，幫助孩子輕鬆掌握基礎技能。透過實作活動激發創意思維，學會專注與自由表達，提升自信心。</p>
+                </div>
+                <div class="feat-card reveal flip lift relative overflow-hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 hover:border-esl-gold/50" style="--d:260ms">
+                    <span class="feat-bar absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-esl-gold to-esl-lightGold"></span>
+                    <span class="absolute -right-2 -bottom-6 text-8xl font-black text-white/5 select-none">03</span>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="feat-icon relative w-14 h-14 shrink-0 rounded-full bg-esl-gold/15 flex items-center justify-center text-esl-gold text-2xl">
+                            <span class="ring absolute inset-0 rounded-full border-2 border-dashed border-esl-gold/40"></span>
+                            <i class="fa-solid fa-people-arrows anim-swing"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-esl-gold/70 tracking-widest">03</p>
                             <h4 class="text-xl font-bold text-esl-gold">雙師教學模式</h4>
-                            <p class="text-gray-300 text-sm mt-1">外師母語教學＋中師協同</p>
                         </div>
-                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
                     </div>
-                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">聘請經驗豐富的外籍教師提供母語式教學，並與中籍教師協同輔助，打造雙重教學支持，快速提升英語能力。</p></div></div>
-                </button>
-                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:300ms" aria-expanded="false">
-                    <div class="flex items-start gap-4">
-                        <span class="text-3xl font-black text-esl-gold/40 leading-none">04</span>
-                        <div class="flex-1">
+                    <p class="inline-flex items-center gap-2 text-white font-medium text-sm mb-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>外師母語教學＋中師協同</p>
+                    <p class="text-gray-300 text-sm leading-relaxed relative">聘請經驗豐富的外籍教師提供母語式教學，並與中籍教師協同輔助，打造雙重教學支持，快速提升英語能力。</p>
+                </div>
+                <div class="feat-card reveal flip lift relative overflow-hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 hover:border-esl-gold/50" style="--d:390ms">
+                    <span class="feat-bar absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-esl-gold to-esl-lightGold"></span>
+                    <span class="absolute -right-2 -bottom-6 text-8xl font-black text-white/5 select-none">04</span>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="feat-icon relative w-14 h-14 shrink-0 rounded-full bg-esl-gold/15 flex items-center justify-center text-esl-gold text-2xl">
+                            <span class="ring absolute inset-0 rounded-full border-2 border-dashed border-esl-gold/40"></span>
+                            <i class="fa-solid fa-pencil anim-write"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-esl-gold/70 tracking-widest">04</p>
                             <h4 class="text-xl font-bold text-esl-gold">學業語言並進</h4>
-                            <p class="text-gray-300 text-sm mt-1">每天專屬作業時間</p>
                         </div>
-                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
                     </div>
-                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">將英語學習與學業進度結合，每天提供專屬作業時間，與家長共同關注進度，輔助語言能力和學業表現全面成長。</p></div></div>
-                </button>
-                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:400ms" aria-expanded="false">
-                    <div class="flex items-start gap-4">
-                        <span class="text-3xl font-black text-esl-gold/40 leading-none">05</span>
-                        <div class="flex-1">
+                    <p class="inline-flex items-center gap-2 text-white font-medium text-sm mb-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>每天專屬作業時間</p>
+                    <p class="text-gray-300 text-sm leading-relaxed relative">將英語學習與學業進度結合，每天提供專屬作業時間，與家長共同關注進度，輔助語言能力和學業表現全面成長。</p>
+                </div>
+                <div class="feat-card reveal flip lift relative overflow-hidden bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15 hover:border-esl-gold/50 md:col-span-2 lg:col-span-1 lg:col-start-2" style="--d:520ms">
+                    <span class="feat-bar absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-esl-gold to-esl-lightGold"></span>
+                    <span class="absolute -right-2 -bottom-6 text-8xl font-black text-white/5 select-none">05</span>
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="feat-icon relative w-14 h-14 shrink-0 rounded-full bg-esl-gold/15 flex items-center justify-center text-esl-gold text-2xl">
+                            <span class="ring absolute inset-0 rounded-full border-2 border-dashed border-esl-gold/40"></span>
+                            <i class="fa-solid fa-book-open-reader anim-pop"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-esl-gold/70 tracking-widest">05</p>
                             <h4 class="text-xl font-bold text-esl-gold">圖書閱讀習慣</h4>
-                            <p class="text-gray-300 text-sm mt-1">課堂閱讀＋親子共讀</p>
                         </div>
-                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
                     </div>
-                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">課堂內設有專屬閱讀時間，鼓勵養成閱讀習慣，並延伸至課後的親子共讀。增進親子互動，幫助擴展詞彙、激發學習興趣。</p></div></div>
-                </button>
+                    <p class="inline-flex items-center gap-2 text-white font-medium text-sm mb-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>課堂閱讀＋親子共讀</p>
+                    <p class="text-gray-300 text-sm leading-relaxed relative">課堂內設有專屬閱讀時間，鼓勵養成閱讀習慣，並延伸至課後的親子共讀。增進親子互動，幫助擴展詞彙、激發學習興趣。</p>
+                </div>
             </div>
         </div>
     </section>
@@ -379,15 +425,9 @@
                     <p class="text-xs text-red-500 mt-1">最遲 18:00 前接回</p>
                 </div>
             </div>
-
-            <div class="reveal mt-8 text-center">
-                <button class="toggle inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-esl-blue/20 text-esl-blue font-medium hover:bg-esl-blue hover:text-white transition-colors" aria-expanded="false">
-                    查看完整課表 <i class="chev fa-solid fa-chevron-down text-sm"></i>
-                </button>
-            </div>
-            <div class="expander">
+            <div class="reveal">
                 <div>
-                    <div class="mt-6 overflow-x-auto shadow-xl rounded-2xl border border-gray-100 bg-white">
+                    <div class="mt-8 overflow-x-auto shadow-xl rounded-2xl border border-gray-100 bg-white">
                         <table class="w-full text-left border-collapse min-w-[760px]">
                             <thead>
                                 <tr class="bg-esl-blue text-white">
@@ -603,15 +643,6 @@
             });
         });
 
-        // 課程特色卡片：點擊展開
-        document.querySelectorAll('.feature').forEach(function (card) {
-            card.addEventListener('click', function () {
-                var open = card.getAttribute('aria-expanded') !== 'true';
-                card.setAttribute('aria-expanded', open);
-                card.querySelector('.expander').classList.toggle('open', open);
-                card.querySelector('.chev').style.transform = open ? 'rotate(45deg)' : '';
-            });
-        });
 
         // 導覽列、進度條、回到頂端、目前區塊高亮
         var nav = document.getElementById('nav'), bar = document.getElementById('progress'), top = document.getElementById('toTop');

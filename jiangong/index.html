@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>建功國小 ESL | 116學年度新生招募中</title>
+    <meta name="description" content="建功國小 ESL 國際教育課後班｜116 學年度一年級新生招募，全外師教學、雙師協同、每日作業時間。">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,17 +14,9 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans TC"', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['"Noto Sans TC"', 'sans-serif'] },
                     colors: {
-                        esl: {
-                            blue: '#0F204B',
-                            lightBlue: '#1A3673',
-                            gold: '#D4AF37',
-                            lightGold: '#F3E5AB',
-                            gray: '#F8F9FA'
-                        }
+                        esl: { blue: '#0F204B', lightBlue: '#1A3673', gold: '#D4AF37', lightGold: '#F3E5AB', gray: '#F8F9FA' }
                     }
                 }
             }
@@ -32,186 +25,248 @@
     <style>
         body { font-family: 'Noto Sans TC', sans-serif; }
         .gradient-text {
-            background: linear-gradient(to right, #D4AF37, #F3E5AB);
-            -webkit-background-clip: text;
+            background: linear-gradient(90deg, #D4AF37, #F3E5AB, #D4AF37);
+            background-size: 200% auto;
+            -webkit-background-clip: text; background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shimmer 5s linear infinite;
         }
         .bg-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: drift 40s linear infinite;
+        }
+
+        /* ---------- 動畫 ---------- */
+        @keyframes shimmer { to { background-position: 200% center; } }
+        @keyframes drift { to { background-position: 60px 60px; } }
+        @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(212,175,55,.55); } 70% { box-shadow: 0 0 0 14px rgba(212,175,55,0); } 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); } }
+        @keyframes heroIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+        @keyframes bounceDown { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+        .float { animation: floaty 6s ease-in-out infinite; }
+        .pulse-gold { animation: pulseRing 2.2s infinite; }
+        .hero-in { opacity: 0; animation: heroIn .8s cubic-bezier(.2,.7,.2,1) forwards; }
+        .bounce-down { animation: bounceDown 1.6s ease-in-out infinite; }
+
+        /* 捲動出現 */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+        .reveal.from-left { transform: translateX(-32px); }
+        .reveal.from-right { transform: translateX(32px); }
+        .reveal.zoom { transform: scale(.92); }
+        .reveal.show { opacity: 1; transform: none; }
+
+        /* 卡片浮起 */
+        .lift { transition: transform .3s ease, box-shadow .3s ease, background-color .3s ease; }
+        .lift:hover { transform: translateY(-6px); box-shadow: 0 18px 40px -12px rgba(15,32,75,.35); }
+
+        /* 展開／收合 */
+        .expander { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease; }
+        .expander > div { overflow: hidden; }
+        .expander.open { grid-template-rows: 1fr; }
+        .toggle .chev { transition: transform .35s ease; }
+        .toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+
+        /* 時間軸 */
+        .timeline-line { transform-origin: top; transform: scaleY(0); transition: transform 1.4s ease .2s; }
+        .show .timeline-line { transform: scaleY(1); }
+        @media (min-width: 768px) {
+            .timeline-line { transform-origin: left; transform: scaleX(0); }
+            .show .timeline-line { transform: scaleX(1); }
+        }
+
+        /* 按鈕光澤 */
+        .shine { position: relative; overflow: hidden; }
+        .shine::after { content: ""; position: absolute; top: 0; left: -75%; width: 50%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-20deg); transition: left .7s ease; }
+        .shine:hover::after { left: 130%; }
+
+        /* 導覽列捲動後縮小 */
+        #nav.scrolled .nav-inner { height: 4rem; }
+        #nav.scrolled { box-shadow: 0 8px 24px -12px rgba(0,0,0,.5); }
+        .nav-inner { transition: height .3s ease; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 100%; background: #D4AF37; transform: scaleX(0); transition: transform .3s ease; transform-origin: left; }
+        .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+        .nav-link.active { color: #D4AF37; }
+
+        #progress { transform-origin: left; transform: scaleX(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .reveal, .hero-in { opacity: 1 !important; transform: none !important; }
+            .timeline-line { transform: none !important; }
         }
     </style>
- <style>
-* {
-  scrollbar-width: thin !important;
-  scrollbar-color: #bfc5ce transparent !important;
-}
-*::-webkit-scrollbar {
-  width: 6px !important;
-}
-*::-webkit-scrollbar-thumb {
-  background-color: #bfc5ce !important;
-  border-radius: 9999px !important;
-}
-*::-webkit-scrollbar-track {
-  background-color: transparent !important;
-  border-radius: 9999px !important;
-}
-</style></head>
-<body class="text-gray-800 bg-gray-50 antialiased selection:bg-esl-gold selection:text-esl-blue"><body class="text-gray-800 bg-gray-50 antialiased selection:bg-esl-gold selection:text-esl-blue" contenteditable="false" spellcheck="false" data-new-gr-c-s-check-loaded="14.1280.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1280.0">
+</head>
+<body class="text-gray-800 bg-gray-50 antialiased selection:bg-esl-gold selection:text-esl-blue">
+
+    <!-- 閱讀進度條 -->
+    <div id="progress" class="fixed top-0 left-0 right-0 h-1 bg-esl-gold z-[60]"></div>
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-esl-blue/95 backdrop-blur-sm border-b border-esl-gold/20 transition-all duration-300">
+    <nav id="nav" class="fixed w-full z-50 bg-esl-blue/95 backdrop-blur-sm border-b border-esl-gold/20 transition-shadow duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-3">
-                    <i class="fa-solid fa-graduation-cap text-esl-gold text-3xl"></i>
-                    <span class="font-bold text-xl md:text-2xl text-white tracking-wider">建功國小 ESL</span>
-                </div>
+            <div class="nav-inner flex justify-between items-center h-20">
+                <a href="#top" class="flex-shrink-0 flex items-center gap-3">
+                    <i class="fa-solid fa-graduation-cap text-esl-gold text-2xl md:text-3xl"></i>
+                    <span class="font-bold text-lg md:text-2xl text-white tracking-wider">建功國小 ESL</span>
+                </a>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#philosophy" class="text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">課程理念</a>
-                    <a href="#abilities" class="text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">關鍵能力</a>
-                    <a href="#features" class="text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">課程特色</a>
-                    <a href="#schedule" class="text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">時間表</a>
-                    <a href="#admission" class="text-esl-gold hover:text-white transition-colors text-sm font-bold">報名資訊</a>
+                    <a href="#philosophy" class="nav-link text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">課程理念</a>
+                    <a href="#abilities" class="nav-link text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">關鍵能力</a>
+                    <a href="#features" class="nav-link text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">課程特色</a>
+                    <a href="#schedule" class="nav-link text-gray-300 hover:text-esl-gold transition-colors text-sm font-medium">時間表</a>
+                    <a href="#admission" class="nav-link text-esl-gold hover:text-white transition-colors text-sm font-bold">報名資訊</a>
                 </div>
+                <a href="#admission" class="md:hidden px-4 py-2 rounded-lg bg-esl-gold text-esl-blue text-sm font-bold">報名資訊</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-esl-blue overflow-hidden">
+    <!-- Hero -->
+    <section id="top" class="relative pt-28 pb-16 lg:pt-40 lg:pb-24 bg-esl-blue overflow-hidden">
         <div class="absolute inset-0 bg-pattern"></div>
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-esl-gold/20 rounded-full blur-3xl"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
                 <div class="lg:col-span-6 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-esl-gold/10 border border-esl-gold/30 text-esl-gold text-sm font-medium mb-8">
-                        <i class="fa-solid fa-star text-xs"></i> 培育未來 · 國際視野
+                    <div class="hero-in inline-flex items-center gap-2 px-4 py-2 rounded-full bg-esl-gold/10 border border-esl-gold/30 text-esl-gold text-sm font-medium mb-6" style="animation-delay:.05s">
+                        <i class="fa-solid fa-star text-xs"></i> 116 學年度一年級新生招募中
                     </div>
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
-                        興趣是開啟<br>
-                        <span class="gradient-text">學習旅程的鑰匙</span>
+                    <h1 class="hero-in text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6" style="animation-delay:.15s">
+                        興趣是開啟<br><span class="gradient-text">學習旅程的鑰匙</span>
                     </h1>
-                    <p class="text-lg text-gray-300 mb-10 leading-relaxed font-light">
-                        在ESL國際教育課後班，我們的使命是開啟孩子對英語學習的興趣，讓學習不僅限於語言，而是成為一場充滿創意、探索和成長的精彩旅程。透過「沉浸式學習」環境，讓孩子輕鬆愉快的氛圍中自然提升英語學習技巧。
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <ul class="hero-in inline-block text-left space-y-3 text-gray-200 text-lg mb-10" style="animation-delay:.3s">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>全外師教學・沉浸式英語環境</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>外師＋中師 雙師協同</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-circle-check text-esl-gold"></i>每天專屬作業時間，學業語言並進</li>
+                    </ul>
+                    <div class="hero-in flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" style="animation-delay:.45s">
+                        <a href="#admission" class="shine pulse-gold px-8 py-4 bg-esl-gold text-esl-blue hover:bg-yellow-400 font-bold rounded-lg transition-all duration-300 text-center">
+                            <i class="fa-solid fa-pen-to-square mr-2"></i>了解報名資訊
+                        </a>
                         <a href="#features" class="px-8 py-4 bg-transparent border border-esl-gold text-esl-gold hover:bg-esl-gold hover:text-esl-blue font-bold rounded-lg transition-all duration-300 text-center">
                             探索課程特色
                         </a>
-                        <a href="#admission" class="px-8 py-4 bg-esl-gold text-esl-blue hover:bg-yellow-400 font-bold rounded-lg shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all duration-300 text-center">
-                            了解報名資訊
-                        </a>
                     </div>
                 </div>
-                <div class="lg:col-span-6 mt-16 lg:mt-0 relative">
-                    <div class="absolute inset-0 bg-esl-gold rounded-2xl transform rotate-3 scale-105 opacity-20"></div>
-                    <img src="images/hero-goals.png" alt="建功國小 ESL國際小學班學習情境" class="relative rounded-2xl shadow-2xl object-cover w-full h-auto border border-white/10">
+                <div class="lg:col-span-6 mt-14 lg:mt-0 relative hero-in" style="animation-delay:.35s">
+                    <div class="float relative">
+                        <div class="absolute inset-0 bg-esl-gold rounded-2xl transform rotate-3 scale-105 opacity-20"></div>
+                        <img src="images/hero-goals.png" alt="國際教育 3 大目標" class="relative rounded-2xl shadow-2xl object-cover w-full h-auto border border-white/10">
+                    </div>
                 </div>
             </div>
+
+            <!-- 重點速覽 -->
+            <div class="mt-14 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                <div class="reveal lift bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-4 md:p-5 text-center" style="--d:0ms">
+                    <i class="fa-regular fa-calendar-xmark text-esl-gold text-2xl mb-2"></i>
+                    <p class="text-xs text-gray-300">報名截止</p>
+                    <p class="text-white font-bold text-lg md:text-xl">4/30（五）12:00</p>
+                </div>
+                <div class="reveal lift bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-4 md:p-5 text-center" style="--d:100ms">
+                    <i class="fa-solid fa-shuffle text-esl-gold text-2xl mb-2"></i>
+                    <p class="text-xs text-gray-300">超額抽籤</p>
+                    <p class="text-white font-bold text-lg md:text-xl">4/30（五）13:00</p>
+                </div>
+                <div class="reveal lift bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-4 md:p-5 text-center" style="--d:200ms">
+                    <i class="fa-solid fa-bullhorn text-esl-gold text-2xl mb-2"></i>
+                    <p class="text-xs text-gray-300">錄取公告</p>
+                    <p class="text-white font-bold text-lg md:text-xl">5/3（一）10:00</p>
+                </div>
+                <div class="reveal lift bg-white/10 backdrop-blur border border-white/10 rounded-2xl p-4 md:p-5 text-center" style="--d:300ms">
+                    <i class="fa-solid fa-user-group text-esl-gold text-2xl mb-2"></i>
+                    <p class="text-xs text-gray-300">每班名額</p>
+                    <p class="text-white font-bold text-lg md:text-xl">25 人</p>
+                </div>
+            </div>
+            <div class="text-center mt-10"><a href="#philosophy" class="bounce-down inline-block text-esl-gold/80 text-2xl" aria-label="往下看"><i class="fa-solid fa-chevron-down"></i></a></div>
         </div>
-        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-b from-transparent to-gray-50"></div>
     </section>
 
-    <!-- Philosophy Section -->
-    <section id="philosophy" class="py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-16">
+    <!-- 課程理念 -->
+    <section id="philosophy" class="py-20 md:py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center max-w-3xl mx-auto mb-12">
                 <h2 class="text-sm font-bold text-esl-gold tracking-widest uppercase mb-3">Philosophy</h2>
-                <h3 class="text-3xl md:text-4xl font-black text-esl-blue mb-6">聽得懂 · 說得出 · 用得上</h3>
-                <p class="text-lg text-gray-600">語言學習不僅僅是學會聽說讀寫，更是一種在全方位學習環境中探索自我、激發創造力的過程。</p>
+                <h3 class="text-3xl md:text-4xl font-black text-esl-blue">聽得懂 · 說得出 · 用得上</h3>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 mb-16">
-                <!-- Point 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div class="w-14 h-14 bg-esl-blue/5 rounded-xl flex items-center justify-center text-esl-blue text-2xl mb-6">
-                        <i class="fa-solid fa-puzzle-piece"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-esl-blue mb-4">1. 多元學科整合</h4>
-                    <p class="text-gray-600 leading-relaxed">透過多樣化的教材、加入「數學及科學」，運用趣味遊戲及情境模擬，孩子不僅能夠自信表達、勇於溝通。</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="reveal lift bg-white p-7 rounded-2xl shadow-sm border border-gray-100" style="--d:0ms">
+                    <div class="w-14 h-14 bg-esl-blue/5 rounded-xl flex items-center justify-center text-esl-blue text-2xl mb-5"><i class="fa-solid fa-puzzle-piece"></i></div>
+                    <h4 class="text-xl font-bold text-esl-blue mb-2">多元學科整合</h4>
+                    <p class="text-gray-500">英語 × 數學 × 科學</p>
                 </div>
-                <!-- Point 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div class="w-14 h-14 bg-esl-blue/5 rounded-xl flex items-center justify-center text-esl-blue text-2xl mb-6">
-                        <i class="fa-solid fa-earth-americas"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-esl-blue mb-4">2. 全英語浸潤環境</h4>
-                    <p class="text-gray-600 leading-relaxed">高單位的英語學習時數，創造全英語浸潤環境，大量的英語溝通，提升語言使用的流暢度。</p>
+                <div class="reveal lift bg-white p-7 rounded-2xl shadow-sm border border-gray-100" style="--d:120ms">
+                    <div class="w-14 h-14 bg-esl-blue/5 rounded-xl flex items-center justify-center text-esl-blue text-2xl mb-5"><i class="fa-solid fa-earth-americas"></i></div>
+                    <h4 class="text-xl font-bold text-esl-blue mb-2">全英語浸潤環境</h4>
+                    <p class="text-gray-500">高時數・大量英語溝通</p>
                 </div>
-                <!-- Point 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-                    <div class="w-14 h-14 bg-esl-blue/5 rounded-xl flex items-center justify-center text-esl-blue text-2xl mb-6">
-                        <i class="fa-solid fa-lightbulb"></i>
-                    </div>
-                    <h4 class="text-xl font-bold text-esl-blue mb-4">3. 主動整合式學習</h4>
-                    <p class="text-gray-600 leading-relaxed">重視主動參與的整合式學習法，相關的 projects 活動練習，建立孩子學習動機和主動找出答案的成就感。</p>
+                <div class="reveal lift bg-white p-7 rounded-2xl shadow-sm border border-gray-100" style="--d:240ms">
+                    <div class="w-14 h-14 bg-esl-blue/5 rounded-xl flex items-center justify-center text-esl-blue text-2xl mb-5"><i class="fa-solid fa-lightbulb"></i></div>
+                    <h4 class="text-xl font-bold text-esl-blue mb-2">主動整合式學習</h4>
+                    <p class="text-gray-500">Projects 實作・自己找答案</p>
                 </div>
             </div>
 
-            <div class="max-w-4xl mx-auto text-center relative">
-                <i class="fa-solid fa-quote-left text-4xl text-esl-gold/20 absolute -top-4 -left-6"></i>
-                <p class="text-xl md:text-2xl font-medium text-esl-lightBlue italic">
-                    「微小的開端，為孩子累積美好未來的基礎。<br class="hidden md:block">從這裡啟程，邁向更廣闊的全球化未來。」
-                </p>
-                <i class="fa-solid fa-quote-right text-4xl text-esl-gold/20 absolute -bottom-4 -right-6"></i>
+            <div class="reveal mt-8 text-center">
+                <button class="toggle inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-esl-blue/20 text-esl-blue font-medium hover:bg-esl-blue hover:text-white transition-colors" aria-expanded="false">
+                    查看詳細說明 <i class="chev fa-solid fa-chevron-down text-sm"></i>
+                </button>
+            </div>
+            <div class="expander">
+                <div>
+                    <div class="mt-6 bg-white rounded-2xl border border-gray-100 p-6 md:p-8 text-gray-600 leading-relaxed space-y-4">
+                        <p>語言學習不僅僅是學會聽說讀寫，更是一種在全方位學習環境中探索自我、激發創造力的過程。</p>
+                        <p><strong class="text-esl-blue">多元學科整合：</strong>透過多樣化的教材、加入「數學及科學」，運用趣味遊戲及情境模擬，孩子不僅能夠自信表達、勇於溝通。</p>
+                        <p><strong class="text-esl-blue">全英語浸潤環境：</strong>高單位的英語學習時數，創造全英語浸潤環境，大量的英語溝通，提升語言使用的流暢度。</p>
+                        <p><strong class="text-esl-blue">主動整合式學習：</strong>重視主動參與的整合式學習法，相關的 projects 活動練習，建立孩子學習動機和主動找出答案的成就感。</p>
+                        <p class="text-esl-lightBlue italic text-center pt-2">「微小的開端，為孩子累積美好未來的基礎。從這裡啟程，邁向更廣闊的全球化未來。」</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 6 Key Abilities Section -->
-    <section id="abilities" class="py-24 bg-white border-t border-gray-100">
+    <!-- 6 大關鍵能力 -->
+    <section id="abilities" class="py-20 md:py-24 bg-white border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1 relative">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="reveal from-left order-2 lg:order-1 relative">
                     <div class="absolute -inset-4 bg-esl-blue/5 rounded-3xl transform -rotate-2"></div>
-                    <img src="images/six-abilities.webp" alt="培育未來6大關鍵能力" class="relative rounded-2xl shadow-xl w-full h-auto object-cover border border-gray-100">
+                    <img src="images/six-abilities.webp" alt="讓孩子像學母語一樣學英文" class="relative rounded-2xl shadow-xl w-full h-auto object-cover border border-gray-100">
                 </div>
                 <div class="order-1 lg:order-2">
-                    <h2 class="text-3xl md:text-4xl font-black text-esl-blue mb-4">全外師教學 沉浸式環境</h2>
-                    <p class="text-xl text-esl-gold font-medium mb-10">複製國外小學情境 培育未來 6 大關鍵能力</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex gap-4">
-                            <div class="mt-1 w-8 h-8 rounded-full bg-esl-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-language text-sm"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-900">外語力</h4>
-                                <p class="text-gray-600">全程外籍教師英語教學，培育優異聽說讀寫能力</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1 w-8 h-8 rounded-full bg-esl-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-calculator text-sm"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-900">數學邏輯力</h4>
-                                <p class="text-gray-600">國際小學科學、數學課程，讓孩子轉動思考，探索未知答案</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1 w-8 h-8 rounded-full bg-esl-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-palette text-sm"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-900">創造力</h4>
-                                <p class="text-gray-600">應用英語到音樂、美術等多元課程活動，創造多采生活</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1 w-8 h-8 rounded-full bg-esl-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-book-open text-sm"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-900">閱讀力</h4>
-                                <p class="text-gray-600">原文故事讀本養成閱讀好習慣，引導討論培養膽識</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1 w-8 h-8 rounded-full bg-esl-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-users text-sm"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-900">群育力</h4>
-                                <p class="text-gray-600">戶外團體活動，建構人際智能與團隊精神</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="mt-1 w-8 h-8 rounded-full bg-esl-blue text-white flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-heart text-sm"></i></div>
-                            <div>
-                                <h4 class="text-lg font-bold text-gray-900">品格力</h4>
-                                <p class="text-gray-600">每月訂定品格主題，以故事、活動等方式引導建立良善品格</p>
-                            </div>
+                    <div class="reveal">
+                        <h2 class="text-3xl md:text-4xl font-black text-esl-blue mb-3">全外師教學 沉浸式環境</h2>
+                        <p class="text-lg text-esl-gold font-medium mb-8">培育未來 6 大關鍵能力</p>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="reveal zoom lift rounded-xl border border-gray-100 bg-gray-50 p-4 text-center" style="--d:0ms"><div class="mx-auto mb-2 w-11 h-11 rounded-full bg-esl-blue text-white flex items-center justify-center"><i class="fa-solid fa-language"></i></div><p class="font-bold text-gray-900">外語力</p></div>
+                        <div class="reveal zoom lift rounded-xl border border-gray-100 bg-gray-50 p-4 text-center" style="--d:80ms"><div class="mx-auto mb-2 w-11 h-11 rounded-full bg-esl-blue text-white flex items-center justify-center"><i class="fa-solid fa-calculator"></i></div><p class="font-bold text-gray-900">數學邏輯力</p></div>
+                        <div class="reveal zoom lift rounded-xl border border-gray-100 bg-gray-50 p-4 text-center" style="--d:160ms"><div class="mx-auto mb-2 w-11 h-11 rounded-full bg-esl-blue text-white flex items-center justify-center"><i class="fa-solid fa-palette"></i></div><p class="font-bold text-gray-900">創造力</p></div>
+                        <div class="reveal zoom lift rounded-xl border border-gray-100 bg-gray-50 p-4 text-center" style="--d:240ms"><div class="mx-auto mb-2 w-11 h-11 rounded-full bg-esl-blue text-white flex items-center justify-center"><i class="fa-solid fa-book-open"></i></div><p class="font-bold text-gray-900">閱讀力</p></div>
+                        <div class="reveal zoom lift rounded-xl border border-gray-100 bg-gray-50 p-4 text-center" style="--d:320ms"><div class="mx-auto mb-2 w-11 h-11 rounded-full bg-esl-blue text-white flex items-center justify-center"><i class="fa-solid fa-users"></i></div><p class="font-bold text-gray-900">群育力</p></div>
+                        <div class="reveal zoom lift rounded-xl border border-gray-100 bg-gray-50 p-4 text-center" style="--d:400ms"><div class="mx-auto mb-2 w-11 h-11 rounded-full bg-esl-blue text-white flex items-center justify-center"><i class="fa-solid fa-heart"></i></div><p class="font-bold text-gray-900">品格力</p></div>
+                    </div>
+
+                    <div class="reveal mt-6">
+                        <button class="toggle inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-esl-blue/20 text-esl-blue font-medium hover:bg-esl-blue hover:text-white transition-colors" aria-expanded="false">
+                            查看詳細說明 <i class="chev fa-solid fa-chevron-down text-sm"></i>
+                        </button>
+                    </div>
+                    <div class="expander">
+                        <div>
+                            <ul class="mt-5 space-y-3 text-gray-600 leading-relaxed">
+                                <li><strong class="text-esl-blue">外語力：</strong>全程外籍教師英語教學，培育優異聽說讀寫能力</li>
+                                <li><strong class="text-esl-blue">數學邏輯力：</strong>國際小學科學、數學課程，讓孩子轉動思考，探索未知答案</li>
+                                <li><strong class="text-esl-blue">創造力：</strong>應用英語到音樂、美術等多元課程活動，創造多采生活</li>
+                                <li><strong class="text-esl-blue">閱讀力：</strong>原文故事讀本養成閱讀好習慣，引導討論培養膽識</li>
+                                <li><strong class="text-esl-blue">群育力：</strong>戶外團體活動，建構人際智能與團隊精神</li>
+                                <li><strong class="text-esl-blue">品格力：</strong>每月訂定品格主題，以故事、活動等方式引導建立良善品格</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -219,183 +274,246 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="py-24 bg-esl-blue text-white relative overflow-hidden">
+    <!-- 課程特色 -->
+    <section id="features" class="py-20 md:py-24 bg-esl-blue text-white relative overflow-hidden">
         <div class="absolute inset-0 bg-pattern opacity-50"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="reveal text-center max-w-3xl mx-auto mb-12">
                 <h2 class="text-sm font-bold text-esl-gold tracking-widest uppercase mb-3">Why Choose Us</h2>
-                <h3 class="text-3xl md:text-4xl font-black mb-6">課程特色</h3>
-                <p class="text-lg text-gray-300">打造全方位的英語學習生態，結合美式教育精神與在地學業需求，讓孩子在快樂中成長，在專注中學習。</p>
+                <h3 class="text-3xl md:text-4xl font-black">課程特色</h3>
+                <p class="text-gray-300 mt-3">點選卡片看詳細說明</p>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 01 -->
-                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors">
-                    <div class="text-4xl font-black text-esl-gold/30 mb-4">01</div>
-                    <h4 class="text-xl font-bold mb-3 text-esl-gold">美式課程體驗</h4>
-                    <p class="text-gray-300 text-sm leading-relaxed">課程仿效國外國小的教學安排，涵蓋聽說讀寫及藝能科目等多元領域。讓英語不僅是第二語言，更成為日常生活與學習的工具。</p>
-                </div>
-                <!-- 02 -->
-                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors">
-                    <div class="text-4xl font-black text-esl-gold/30 mb-4">02</div>
-                    <h4 class="text-xl font-bold mb-3 text-esl-gold">活潑學習方式</h4>
-                    <p class="text-gray-300 text-sm leading-relaxed">以生動有趣的方式，幫助孩子輕鬆掌握基礎技能。透過實作活動激發創意思維，學會專注與自由表達，提升自信心。</p>
-                </div>
-                <!-- 03 -->
-                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors">
-                    <div class="text-4xl font-black text-esl-gold/30 mb-4">03</div>
-                    <h4 class="text-xl font-bold mb-3 text-esl-gold">雙師教學模式</h4>
-                    <p class="text-gray-300 text-sm leading-relaxed">聘請經驗豐富的外籍教師提供母語式教學，並與中籍教師協同輔助，打造雙重教學支持，快速提升英語能力。</p>
-                </div>
-                <!-- 04 -->
-                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors">
-                    <div class="text-4xl font-black text-esl-gold/30 mb-4">04</div>
-                    <h4 class="text-xl font-bold mb-3 text-esl-gold">學業語言並進</h4>
-                    <p class="text-gray-300 text-sm leading-relaxed">將英語學習與學業進度結合，每天提供專屬作業時間，與家長共同關注進度，輔助語言能力和學業表現全面成長。</p>
-                </div>
-                <!-- 05 -->
-                <div class="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors lg:col-span-2 lg:w-1/2 lg:mx-auto">
-                    <div class="text-4xl font-black text-esl-gold/30 mb-4">05</div>
-                    <h4 class="text-xl font-bold mb-3 text-esl-gold">圖書閱讀習慣</h4>
-                    <p class="text-gray-300 text-sm leading-relaxed">課堂內設有專屬閱讀時間，鼓勵養成閱讀習慣，並延伸至課後的親子共讀。增進親子互動，幫助擴展詞彙、激發學習興趣。</p>
-                </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- 每張卡片：標題＋一句重點，點開看詳細 -->
+                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:0ms" aria-expanded="false">
+                    <div class="flex items-start gap-4">
+                        <span class="text-3xl font-black text-esl-gold/40 leading-none">01</span>
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold text-esl-gold">美式課程體驗</h4>
+                            <p class="text-gray-300 text-sm mt-1">仿效國外小學・聽說讀寫＋藝能</p>
+                        </div>
+                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
+                    </div>
+                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">課程仿效國外國小的教學安排，涵蓋聽說讀寫及藝能科目等多元領域。讓英語不僅是第二語言，更成為日常生活與學習的工具。</p></div></div>
+                </button>
+                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:100ms" aria-expanded="false">
+                    <div class="flex items-start gap-4">
+                        <span class="text-3xl font-black text-esl-gold/40 leading-none">02</span>
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold text-esl-gold">活潑學習方式</h4>
+                            <p class="text-gray-300 text-sm mt-1">實作活動・激發創意與自信</p>
+                        </div>
+                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
+                    </div>
+                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">以生動有趣的方式，幫助孩子輕鬆掌握基礎技能。透過實作活動激發創意思維，學會專注與自由表達，提升自信心。</p></div></div>
+                </button>
+                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:200ms" aria-expanded="false">
+                    <div class="flex items-start gap-4">
+                        <span class="text-3xl font-black text-esl-gold/40 leading-none">03</span>
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold text-esl-gold">雙師教學模式</h4>
+                            <p class="text-gray-300 text-sm mt-1">外師母語教學＋中師協同</p>
+                        </div>
+                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
+                    </div>
+                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">聘請經驗豐富的外籍教師提供母語式教學，並與中籍教師協同輔助，打造雙重教學支持，快速提升英語能力。</p></div></div>
+                </button>
+                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:300ms" aria-expanded="false">
+                    <div class="flex items-start gap-4">
+                        <span class="text-3xl font-black text-esl-gold/40 leading-none">04</span>
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold text-esl-gold">學業語言並進</h4>
+                            <p class="text-gray-300 text-sm mt-1">每天專屬作業時間</p>
+                        </div>
+                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
+                    </div>
+                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">將英語學習與學業進度結合，每天提供專屬作業時間，與家長共同關注進度，輔助語言能力和學業表現全面成長。</p></div></div>
+                </button>
+                <button class="feature reveal lift text-left bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:bg-white/15" style="--d:400ms" aria-expanded="false">
+                    <div class="flex items-start gap-4">
+                        <span class="text-3xl font-black text-esl-gold/40 leading-none">05</span>
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold text-esl-gold">圖書閱讀習慣</h4>
+                            <p class="text-gray-300 text-sm mt-1">課堂閱讀＋親子共讀</p>
+                        </div>
+                        <i class="chev fa-solid fa-plus text-esl-gold/70 mt-1 transition-transform"></i>
+                    </div>
+                    <div class="expander"><div><p class="text-gray-300 text-sm leading-relaxed pt-4">課堂內設有專屬閱讀時間，鼓勵養成閱讀習慣，並延伸至課後的親子共讀。增進親子互動，幫助擴展詞彙、激發學習興趣。</p></div></div>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Schedule Section -->
-    <section id="schedule" class="py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-element-id="cc3fe9da-d63d-458d-9e03-f2ab3c921190">
-            <div class="text-center mb-12" data-element-id="867278d6-f2ad-434f-a7bd-f54bd644c467">
+    <!-- 時間表 -->
+    <section id="schedule" class="py-20 md:py-24 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="reveal text-center mb-10">
                 <h2 class="text-sm font-bold text-esl-gold tracking-widest uppercase mb-3">Schedule</h2>
-                <h3 class="text-3xl md:text-4xl font-black text-esl-blue mb-4">課程時間表</h3>
-                <p class="text-gray-600 font-medium">每週一至週五 12:40－17:30 <span class="text-sm">(週二 16:10－17:30)</span></p>
+                <h3 class="text-3xl md:text-4xl font-black text-esl-blue">課程時間表</h3>
             </div>
 
-            <div class="overflow-x-auto shadow-xl rounded-2xl border border-gray-100 bg-white">
-                <table class="w-full text-left border-collapse min-w-[800px]">
-                    <thead>
-                        <tr class="bg-esl-blue text-white">
-                            <th class="py-4 px-6 font-bold w-1/6">時間</th>
-                            <th class="py-4 px-6 font-bold w-1/6">週一</th>
-                            <th class="py-4 px-6 font-bold w-1/6">週二</th>
-                            <th class="py-4 px-6 font-bold w-1/6">週三</th>
-                            <th class="py-4 px-6 font-bold w-1/6">週四</th>
-                            <th class="py-4 px-6 font-bold w-1/6">週五</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-700 text-sm divide-y divide-gray-100">
-                        <tr class="hover:bg-esl-blue/5 transition-colors">
-                            <td class="py-4 px-6 font-medium text-esl-blue">12:40-13:15 午休</td>
-                            <td class="py-4 px-6">午後小憩 Nap</td>
-                            <td class="py-4 px-6" data-element-id="3fe1a9de-ecc9-442d-a3e8-892d62ad45e2" style="text-align: center;">-</td>
-                            <td class="py-4 px-6">午後小憩 Nap</td>
-                            <td class="py-4 px-6">午後小憩 Nap</td>
-                            <td class="py-4 px-6">午後小憩 Nap</td>
-                        </tr>
-                        <tr class="hover:bg-esl-blue/5 transition-colors">
-                            <td class="py-4 px-6 font-medium text-esl-blue">13:20-14:00 第五節</td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold" data-element-id="0e9c7447-9e2a-4ce6-96a4-b73fb413bb8d">外師聽力/口說<br>Listening/Speaking<br></td>
-                            <td class="py-4 px-6 text-gray-400 text-center" data-element-id="7decb928-1d4d-47f5-95ee-9f28ea5f7789">-</td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold" data-element-id="98ab1eaf-37d9-46e3-9b33-d1a7c206a69c">外師思辨性思考<br>Critical Thinking<br></td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold" data-element-id="8df8d726-9b83-4c25-843c-daedad888dad">外師聽力/口說<br>Listening/Speaking<br></td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold" data-element-id="719542e6-137e-458a-aabf-429f0a3a99fc">外師思辨性思考<br>Critical Thinking<br></td>
-                        </tr>
-                        <tr class="hover:bg-esl-blue/5 transition-colors">
-                            <td class="py-4 px-6 font-medium text-esl-blue">14:10-14:50 第六節</td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold">外師發音 Phonics</td>
-                            <td class="py-4 px-6 text-gray-400 text-center" data-element-id="49147c55-d829-49b2-a9ec-d4585d3fae0e">-</td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold">外師數學 Math</td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold">外師發音 Phonics</td>
-                            <td class="py-4 px-6 font-semibold text-esl-gold">外師數學 Math</td>
-                        </tr>
-                        <tr class="hover:bg-esl-blue/5 transition-colors">
-                            <td class="py-4 px-6 font-medium text-esl-blue">15:10-15:50 第七節</td>
-                            <td class="py-4 px-6">中師時間(閱讀寫作)</td>
-                            <td class="py-4 px-6 text-gray-400 text-center">-</td>
-                            <td class="py-4 px-6">中師時間(閱讀寫作)</td>
-                            <td class="py-4 px-6">中師時間(閱讀寫作)</td>
-                            <td class="py-4 px-6">中師時間(閱讀寫作)</td>
-                        </tr>
-                        <tr class="hover:bg-esl-blue/5 transition-colors">
-                            <td class="py-4 px-6 font-medium text-esl-blue">16:00-17:30 第八節</td>
-                            <td class="py-4 px-6 bg-gray-50/50">國小作業時間</td>
-                            <td class="py-4 px-6 bg-gray-50/50">國小作業時間</td>
-                            <td class="py-4 px-6 bg-gray-50/50">國小作業時間</td>
-                            <td class="py-4 px-6 bg-gray-50/50">國小作業時間</td>
-                            <td class="py-4 px-6 bg-gray-50/50">國小作業時間</td>
-                        </tr>
-                        <tr class="hover:bg-esl-blue/5 transition-colors">
-                            <td class="py-4 px-6 font-medium text-esl-blue">17:30-18:00 結束</td>
-                            <td class="py-4 px-6">放學時光<br><span class="text-xs text-red-500">(最遲請於18:00前接回)</span></td>
-                            <td class="py-4 px-6">放學時光</td>
-                            <td class="py-4 px-6">放學時光</td>
-                            <td class="py-4 px-6">放學時光</td>
-                            <td class="py-4 px-6">放學時光</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="reveal lift bg-white rounded-2xl p-5 border border-gray-100 shadow-sm" style="--d:0ms">
+                    <i class="fa-regular fa-clock text-esl-gold text-2xl"></i>
+                    <p class="text-sm text-gray-500 mt-3">上課時間</p>
+                    <p class="font-bold text-esl-blue text-lg">週一～五 12:40－17:30</p>
+                    <p class="text-xs text-gray-500 mt-1">週二 16:10 開始</p>
+                </div>
+                <div class="reveal lift bg-white rounded-2xl p-5 border border-gray-100 shadow-sm" style="--d:100ms">
+                    <i class="fa-solid fa-chalkboard-user text-esl-gold text-2xl"></i>
+                    <p class="text-sm text-gray-500 mt-3">外師課程</p>
+                    <p class="font-bold text-esl-blue text-lg">聽說・思辨・發音・數學</p>
+                    <p class="text-xs text-gray-500 mt-1">每天 2 節（週二除外）</p>
+                </div>
+                <div class="reveal lift bg-white rounded-2xl p-5 border border-gray-100 shadow-sm" style="--d:200ms">
+                    <i class="fa-solid fa-pencil text-esl-gold text-2xl"></i>
+                    <p class="text-sm text-gray-500 mt-3">作業時間</p>
+                    <p class="font-bold text-esl-blue text-lg">每天 16:00－17:30</p>
+                    <p class="text-xs text-gray-500 mt-1">國小作業完成再回家</p>
+                </div>
+                <div class="reveal lift bg-white rounded-2xl p-5 border border-gray-100 shadow-sm" style="--d:300ms">
+                    <i class="fa-solid fa-house text-esl-gold text-2xl"></i>
+                    <p class="text-sm text-gray-500 mt-3">接回時間</p>
+                    <p class="font-bold text-esl-blue text-lg">17:30－18:00</p>
+                    <p class="text-xs text-red-500 mt-1">最遲 18:00 前接回</p>
+                </div>
             </div>
-            <p class="text-xs text-gray-500 mt-4 text-right">備註：建功國小國際教育課後班有權依教學需求變更課程安排。</p>
+
+            <div class="reveal mt-8 text-center">
+                <button class="toggle inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-esl-blue/20 text-esl-blue font-medium hover:bg-esl-blue hover:text-white transition-colors" aria-expanded="false">
+                    查看完整課表 <i class="chev fa-solid fa-chevron-down text-sm"></i>
+                </button>
+            </div>
+            <div class="expander">
+                <div>
+                    <div class="mt-6 overflow-x-auto shadow-xl rounded-2xl border border-gray-100 bg-white">
+                        <table class="w-full text-left border-collapse min-w-[760px]">
+                            <thead>
+                                <tr class="bg-esl-blue text-white">
+                                    <th class="py-4 px-5 font-bold">時間</th>
+                                    <th class="py-4 px-5 font-bold">週一</th>
+                                    <th class="py-4 px-5 font-bold">週二</th>
+                                    <th class="py-4 px-5 font-bold">週三</th>
+                                    <th class="py-4 px-5 font-bold">週四</th>
+                                    <th class="py-4 px-5 font-bold">週五</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-700 text-sm divide-y divide-gray-100">
+                                <tr class="hover:bg-esl-blue/5 transition-colors">
+                                    <td class="py-4 px-5 font-medium text-esl-blue">12:40-13:15 午休</td>
+                                    <td class="py-4 px-5">午後小憩 Nap</td><td class="py-4 px-5 text-gray-400 text-center">-</td><td class="py-4 px-5">午後小憩 Nap</td><td class="py-4 px-5">午後小憩 Nap</td><td class="py-4 px-5">午後小憩 Nap</td>
+                                </tr>
+                                <tr class="hover:bg-esl-blue/5 transition-colors">
+                                    <td class="py-4 px-5 font-medium text-esl-blue">13:20-14:00 第五節</td>
+                                    <td class="py-4 px-5 font-semibold text-esl-gold">外師聽力/口說<br>Listening/Speaking</td><td class="py-4 px-5 text-gray-400 text-center">-</td><td class="py-4 px-5 font-semibold text-esl-gold">外師思辨性思考<br>Critical Thinking</td><td class="py-4 px-5 font-semibold text-esl-gold">外師聽力/口說<br>Listening/Speaking</td><td class="py-4 px-5 font-semibold text-esl-gold">外師思辨性思考<br>Critical Thinking</td>
+                                </tr>
+                                <tr class="hover:bg-esl-blue/5 transition-colors">
+                                    <td class="py-4 px-5 font-medium text-esl-blue">14:10-14:50 第六節</td>
+                                    <td class="py-4 px-5 font-semibold text-esl-gold">外師發音 Phonics</td><td class="py-4 px-5 text-gray-400 text-center">-</td><td class="py-4 px-5 font-semibold text-esl-gold">外師數學 Math</td><td class="py-4 px-5 font-semibold text-esl-gold">外師發音 Phonics</td><td class="py-4 px-5 font-semibold text-esl-gold">外師數學 Math</td>
+                                </tr>
+                                <tr class="hover:bg-esl-blue/5 transition-colors">
+                                    <td class="py-4 px-5 font-medium text-esl-blue">15:10-15:50 第七節</td>
+                                    <td class="py-4 px-5">中師時間(閱讀寫作)</td><td class="py-4 px-5 text-gray-400 text-center">-</td><td class="py-4 px-5">中師時間(閱讀寫作)</td><td class="py-4 px-5">中師時間(閱讀寫作)</td><td class="py-4 px-5">中師時間(閱讀寫作)</td>
+                                </tr>
+                                <tr class="hover:bg-esl-blue/5 transition-colors">
+                                    <td class="py-4 px-5 font-medium text-esl-blue">16:00-17:30 第八節</td>
+                                    <td class="py-4 px-5">國小作業時間</td><td class="py-4 px-5">國小作業時間</td><td class="py-4 px-5">國小作業時間</td><td class="py-4 px-5">國小作業時間</td><td class="py-4 px-5">國小作業時間</td>
+                                </tr>
+                                <tr class="hover:bg-esl-blue/5 transition-colors">
+                                    <td class="py-4 px-5 font-medium text-esl-blue">17:30-18:00 結束</td>
+                                    <td class="py-4 px-5">放學時光<br><span class="text-xs text-red-500">(最遲請於18:00前接回)</span></td><td class="py-4 px-5">放學時光</td><td class="py-4 px-5">放學時光</td><td class="py-4 px-5">放學時光</td><td class="py-4 px-5">放學時光</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3 text-right">備註：建功國小國際教育課後班有權依教學需求變更課程安排。</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Admission Section -->
-    <section id="admission" class="py-24 bg-white relative">
+    <!-- 報名資訊 -->
+    <section id="admission" class="py-20 md:py-24 bg-white relative">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-esl-blue text-white rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
+            <div class="reveal zoom bg-esl-blue text-white rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
                 <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-esl-gold rounded-full opacity-20 blur-2xl"></div>
                 <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-esl-lightBlue rounded-full opacity-50 blur-2xl"></div>
-                
+
                 <div class="relative z-10">
                     <div class="text-center mb-10">
-                        <h2 class="text-3xl md:text-4xl font-black mb-4">招生與報名資訊</h2>
-                        <p class="text-gray-300">歡迎加入建功國小ESL國際教育課後班，請詳細閱讀以下招生規定與時程。</p>
+                        <h2 class="text-3xl md:text-4xl font-black mb-3">招生與報名資訊</h2>
+                        <p class="text-gray-300">對象：116 學年度建功國小一年級新生</p>
                     </div>
 
-                    <div class="grid md:grid-cols-2 gap-12">
-                        <!-- Left Info -->
-                        <div class="space-y-8">
-                            <div>
-                                <h3 class="text-xl font-bold text-esl-gold mb-4 border-b border-white/20 pb-2"><i class="fa-solid fa-file-invoice-dollar mr-2"></i>費用說明</h3>
-                                <ul class="space-y-3 text-gray-200">
-                                    <li class="flex items-start"><i class="fa-solid fa-check text-esl-gold mt-1 mr-3"></i> <span><strong>學期費用（約五個月）：</strong><br>16～20 人開班：42,000 元<br>21～25 人開班：40,000 元</span></li>
-                                    <li class="flex items-start"><i class="fa-solid fa-check text-esl-gold mt-1 mr-3"></i> <span><strong>教材費用：</strong>5,000 元（含班費、設備、班書等）</span></li>
-                                </ul>
+                    <!-- 時間軸 -->
+                    <div class="reveal relative mb-12">
+                        <div class="timeline-line absolute bg-esl-gold/40 left-5 top-0 bottom-0 w-0.5 md:left-0 md:right-0 md:top-5 md:bottom-auto md:w-auto md:h-0.5"></div>
+                        <ol class="relative grid gap-6 md:grid-cols-4">
+                            <li class="flex md:block items-start gap-4">
+                                <span class="pulse-gold shrink-0 w-10 h-10 rounded-full bg-esl-gold text-esl-blue flex items-center justify-center font-black">1</span>
+                                <div class="md:mt-4"><p class="text-esl-gold font-bold">報名截止</p><p class="text-white font-bold text-lg">4/30（五）中午 12:00</p></div>
+                            </li>
+                            <li class="flex md:block items-start gap-4">
+                                <span class="shrink-0 w-10 h-10 rounded-full bg-esl-lightBlue border-2 border-esl-gold text-esl-gold flex items-center justify-center font-black">2</span>
+                                <div class="md:mt-4"><p class="text-esl-gold font-bold">超額抽籤</p><p class="text-white font-bold text-lg">4/30（五）下午 13:00</p></div>
+                            </li>
+                            <li class="flex md:block items-start gap-4">
+                                <span class="shrink-0 w-10 h-10 rounded-full bg-esl-lightBlue border-2 border-esl-gold text-esl-gold flex items-center justify-center font-black">3</span>
+                                <div class="md:mt-4"><p class="text-esl-gold font-bold">錄取公告</p><p class="text-white font-bold text-lg">5/3（一）早上 10:00</p></div>
+                            </li>
+                            <li class="flex md:block items-start gap-4">
+                                <span class="shrink-0 w-10 h-10 rounded-full bg-esl-lightBlue border-2 border-esl-gold text-esl-gold flex items-center justify-center font-black">4</span>
+                                <div class="md:mt-4"><p class="text-esl-gold font-bold">完成繳費</p><p class="text-white font-bold text-lg">統一提供繳費帳號</p></div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 md:gap-10">
+                        <!-- 費用 -->
+                        <div>
+                            <h3 class="text-xl font-bold text-esl-gold mb-4"><i class="fa-solid fa-file-invoice-dollar mr-2"></i>費用（約五個月）</h3>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="reveal lift rounded-2xl bg-white/10 border border-white/10 p-4 text-center" style="--d:0ms">
+                                    <p class="text-xs text-gray-300">16～20 人開班</p>
+                                    <p class="text-2xl md:text-3xl font-black text-esl-gold mt-1">$<span class="count" data-to="42000">42,000</span></p>
+                                </div>
+                                <div class="reveal lift rounded-2xl bg-white/10 border border-white/10 p-4 text-center" style="--d:120ms">
+                                    <p class="text-xs text-gray-300">21～25 人開班</p>
+                                    <p class="text-2xl md:text-3xl font-black text-esl-gold mt-1">$<span class="count" data-to="40000">40,000</span></p>
+                                </div>
                             </div>
-                            
-                            <div>
-                                <h3 class="text-xl font-bold text-esl-gold mb-4 border-b border-white/20 pb-2"><i class="fa-solid fa-circle-info mr-2"></i>重要時程與規定</h3>
-                                <ul class="space-y-4 text-gray-200 text-sm leading-relaxed">
-                                    <li><span class="text-esl-gold font-bold">報名截止：</span>116年4月30日（五）中午 12 點前</li>
-                                    <li><span class="text-esl-gold font-bold">對象與名額：</span>本課程僅開放 116學年度建功國小一年級新生 報名。每班 25 位學生，正取 25 人，備取若干人。<br><span class="text-xs text-gray-400">(建功國小教職員子女將以外加方式錄取。若未達開課標準校方保留開班權利)</span></li>
-                                    <li><span class="text-esl-gold font-bold">錄取公告：</span>116年5月3日(一) 早上 10:00，並於學校網站公告。</li>
-                                    <li><span class="text-esl-gold font-bold">超額抽籤：</span>人數超額時，將於 116年4月30日(五) 下午 13:00 於會議室錄影抽籤決定。</li>
-                                    <li><span class="text-esl-gold font-bold">繳費方式：</span>錄取後，將統一提供繳費帳號，請家長於期限內依繳費說明完成繳費，逾期視同放棄，並通知備取遞補。</li>
-                                </ul>
+                            <p class="text-sm text-gray-300 mt-3"><i class="fa-solid fa-plus text-esl-gold mr-1"></i>教材費 5,000 元（含班費、設備、班書等）</p>
+
+                            <button class="toggle mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 text-white font-medium hover:bg-white hover:text-esl-blue transition-colors" aria-expanded="false">
+                                報名規定詳細說明 <i class="chev fa-solid fa-chevron-down text-sm"></i>
+                            </button>
+                            <div class="expander">
+                                <div>
+                                    <ul class="mt-5 space-y-3 text-gray-200 text-sm leading-relaxed">
+                                        <li><span class="text-esl-gold font-bold">報名截止：</span>116年4月30日（五）中午 12 點前</li>
+                                        <li><span class="text-esl-gold font-bold">對象與名額：</span>本課程僅開放 116學年度建功國小一年級新生 報名。每班 25 位學生，正取 25 人，備取若干人。<br><span class="text-xs text-gray-400">(建功國小教職員子女將以外加方式錄取。若未達開課標準校方保留開班權利)</span></li>
+                                        <li><span class="text-esl-gold font-bold">超額抽籤：</span>人數超額時，將於 116年4月30日(五) 下午 13:00 於會議室錄影抽籤決定。</li>
+                                        <li><span class="text-esl-gold font-bold">錄取公告：</span>116年5月3日(一) 早上 10:00，並於學校網站公告。</li>
+                                        <li><span class="text-esl-gold font-bold">繳費方式：</span>錄取後，將統一提供繳費帳號，請家長於期限內依繳費說明完成繳費，逾期視同放棄，並通知備取遞補。</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Right Actions -->
-                        <div class="flex flex-col items-center justify-center bg-white/5 rounded-2xl p-8 border border-white/10">
+                        <!-- 報名 -->
+                        <div class="flex flex-col items-center justify-center bg-white/5 rounded-2xl p-6 md:p-8 border border-white/10">
                             <h3 class="text-xl font-bold text-center mb-6">立即加入學習旅程</h3>
-                            
-                            <!-- CTA Button -->
-                            <a id="signup-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScqnizsPxjKZLslfacT2A3XJ1q8Jq06acje67AraFAIEdWMKA/viewform" target="_blank" rel="noopener" class="w-full py-4 bg-esl-gold text-esl-blue hover:bg-yellow-400 font-black rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-center text-lg mb-8 transform hover:-translate-y-1">
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLScqnizsPxjKZLslfacT2A3XJ1q8Jq06acje67AraFAIEdWMKA/viewform" target="_blank" rel="noopener" class="shine pulse-gold w-full py-4 bg-esl-gold text-esl-blue hover:bg-yellow-400 font-black rounded-xl shadow-lg transition-all duration-300 text-center text-lg mb-7 hover:-translate-y-1">
                                 <i class="fa-solid fa-pen-to-square mr-2"></i> 填寫線上報名表
                             </a>
-
-                            <div class="text-center w-full">
-                                <div class="flex items-center justify-center space-x-4 mb-4">
-                                    <div class="h-px bg-white/20 flex-1"></div>
-                                    <span class="text-sm text-gray-400">或掃描 QR Code 報名</span>
-                                    <div class="h-px bg-white/20 flex-1"></div>
-                                </div>
-                                <div class="bg-white p-3 rounded-xl inline-block mx-auto">
-                                    <img src="images/signup-qr.png" alt="報名 QR Code" class="w-40 h-40 object-contain">
-                                </div>
-                                <p class="text-xs text-gray-300 mt-3">掃描上方 QR Code 填寫線上報名表</p>
+                            <div class="flex items-center w-full gap-4 mb-4">
+                                <div class="h-px bg-white/20 flex-1"></div>
+                                <span class="text-sm text-gray-400">或掃描 QR Code 報名</span>
+                                <div class="h-px bg-white/20 flex-1"></div>
+                            </div>
+                            <div class="bg-white p-3 rounded-xl transition-transform duration-300 hover:scale-105">
+                                <img src="images/signup-qr.png" alt="報名 QR Code" class="w-40 h-40 object-contain">
                             </div>
                         </div>
                     </div>
@@ -404,69 +522,116 @@
         </div>
     </section>
 
-    <!-- Contact & Footer Section -->
+    <!-- 聯絡資訊 -->
     <footer class="bg-gray-900 text-gray-300 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                
-                <!-- Left: Contact Info -->
-                <div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div class="reveal from-left">
                     <h3 class="text-2xl font-bold text-white mb-6">聯絡資訊</h3>
                     <ul class="space-y-4 mb-8">
-                        <li class="flex items-start">
-                            <i class="fa-solid fa-location-dot mt-1 w-6 text-esl-gold"></i>
-                            <div>
-                                <strong class="text-white">上課地點：</strong><br>
-                                建功國小教室 (開班前另行公告)
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fa-brands fa-line mt-1 w-6 text-[#00B900] text-lg"></i>
-                            <div>
-                                <strong class="text-white">聯絡方式：</strong><br>
-                                ESL 官方 LINE（加入官方 LINE 即可諮詢）
-                            </div>
-                        </li>
+                        <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 w-6 text-esl-gold"></i><div><strong class="text-white">上課地點：</strong>建功國小教室（開班前另行公告）</div></li>
+                        <li class="flex items-start"><i class="fa-brands fa-line mt-1 w-6 text-[#00B900] text-lg"></i><div><strong class="text-white">聯絡方式：</strong>ESL 官方 LINE（加入即可諮詢）</div></li>
                     </ul>
                     <a id="school-site" href="#" target="_blank" rel="noopener" class="inline-flex items-center text-sm font-medium text-esl-gold hover:text-white transition-colors border border-esl-gold hover:bg-esl-gold hover:border-transparent px-5 py-2.5 rounded-lg">
                         前往學校官網 <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
-
-                <!-- Right: LINE QR Code -->
-                <div class="flex flex-col items-start md:items-end">
-                    <div class="bg-white p-4 rounded-2xl shadow-lg text-center">
-                        <img src="images/line-qr.jpg" alt="ESL 官方 LINE QR Code" class="w-48 h-48 object-cover rounded-lg border border-gray-100">
+                <div class="reveal from-right flex flex-col items-start md:items-end">
+                    <div class="bg-white p-4 rounded-2xl shadow-lg text-center transition-transform duration-300 hover:scale-105">
+                        <img src="images/line-qr.jpg" alt="ESL 官方 LINE QR Code" class="w-44 h-44 object-cover rounded-lg border border-gray-100">
                         <p class="mt-3 text-sm font-bold text-[#00B900]"><i class="fa-brands fa-line mr-1"></i> 掃描加入官方 LINE</p>
                     </div>
                 </div>
-                
             </div>
         </div>
-
         <div class="bg-black/50 py-6">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left text-sm text-gray-500">
                 <p>© 2027 建功國小國際教育課後班. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- 回到頂端 -->
+    <a href="#top" id="toTop" class="fixed bottom-5 right-5 z-50 w-12 h-12 rounded-full bg-esl-gold text-esl-blue shadow-lg flex items-center justify-center opacity-0 translate-y-4 pointer-events-none transition-all duration-300" aria-label="回到頂端"><i class="fa-solid fa-arrow-up"></i></a>
 
+    <!-- ========= 只要改這裡 ========= -->
+    <script>
+      const SCHOOL_SITE_URL = "";   // 學校官網網址（沒填的話「前往學校官網」按鈕會隱藏）
+    </script>
+    <!-- ============================== -->
+    <script>
+    (function () {
+        var site = document.getElementById('school-site');
+        if (SCHOOL_SITE_URL) site.href = SCHOOL_SITE_URL; else site.style.display = 'none';
 
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        // 捲動出現 + 數字跳動
+        function countUp(el) {
+            var to = +el.dataset.to, start = null, dur = 1200;
+            if (reduce) return;
+            function step(t) {
+                if (!start) start = t;
+                var p = Math.min((t - start) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.round(to * e).toLocaleString('en-US');
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (!en.isIntersecting) return;
+                    en.target.classList.add('show');
+                    en.target.querySelectorAll('.count').forEach(countUp);
+                    io.unobserve(en.target);
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+        } else {
+            document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('show'); });
+        }
 
+        // 「查看詳細」按鈕：控制緊接在它（或它的父層）後面的 .expander
+        document.querySelectorAll('.toggle').forEach(function (btn) {
+            var panel = btn.nextElementSibling && btn.nextElementSibling.classList.contains('expander')
+                ? btn.nextElementSibling : btn.parentElement.nextElementSibling;
+            btn.addEventListener('click', function () {
+                var open = btn.getAttribute('aria-expanded') !== 'true';
+                btn.setAttribute('aria-expanded', open);
+                panel.classList.toggle('open', open);
+            });
+        });
 
-<!-- ========= 只要改這裡 ========= -->
-<script>
-  const SCHOOL_SITE_URL = "";   // 建功國小官網網址（沒填的話「前往學校官網」按鈕會隱藏）
-</script>
-<!-- ============================== -->
-<script>
-  (function(){
-    var site=document.getElementById('school-site');
-    if (SCHOOL_SITE_URL) site.href=SCHOOL_SITE_URL; else site.style.display='none';
-  })();
-</script>
+        // 課程特色卡片：點擊展開
+        document.querySelectorAll('.feature').forEach(function (card) {
+            card.addEventListener('click', function () {
+                var open = card.getAttribute('aria-expanded') !== 'true';
+                card.setAttribute('aria-expanded', open);
+                card.querySelector('.expander').classList.toggle('open', open);
+                card.querySelector('.chev').style.transform = open ? 'rotate(45deg)' : '';
+            });
+        });
+
+        // 導覽列、進度條、回到頂端、目前區塊高亮
+        var nav = document.getElementById('nav'), bar = document.getElementById('progress'), top = document.getElementById('toTop');
+        var links = [].slice.call(document.querySelectorAll('.nav-link'));
+        var sections = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+        function onScroll() {
+            var y = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+            nav.classList.toggle('scrolled', y > 40);
+            bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+            var showTop = y > 600;
+            top.style.opacity = showTop ? 1 : 0;
+            top.style.transform = showTop ? 'none' : 'translateY(1rem)';
+            top.style.pointerEvents = showTop ? 'auto' : 'none';
+            var cur = -1;
+            sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top < 120) cur = i; });
+            links.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+        }
+        addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+    })();
+    </script>
 </body>
-</html>
 </html>
